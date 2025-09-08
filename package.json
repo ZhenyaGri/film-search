@@ -1,0 +1,46 @@
+{
+  "name": "film-search",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite --port 7070",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --port 7070",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext ts,tsx --fix",
+    "format": "prettier --write ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZhenyaGri/film-search.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZhenyaGri/film-search/issues"
+  },
+  "homepage": "https://github.com/ZhenyaGri/film-search#readme",
+  "description": "",
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@mantine/core": "^8.3.0",
+    "@mantine/hooks": "^8.3.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.8.2"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "@typescript-eslint/eslint-plugin": "^8.43.0",
+    "@typescript-eslint/parser": "^8.43.0",
+    "@vitejs/plugin-react": "^5.0.2",
+    "eslint": "^9.35.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.5"
+  }
+}
