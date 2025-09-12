@@ -25,6 +25,7 @@ export default function MovieDetailPage() {
   }
 
   return (
+    
     <Container size='85%' mt='md'>
        <Grid>
         <Grid.Col span={{ base: 12, md: 4 }}>
