@@ -1,4 +1,4 @@
-import { ApiResponse, Movie, MovieSearchParams } from "./types";
+import { ApiResponse, Movie, MovieDetails, MovieSearchParams } from "./types";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 const API_TOKEN = import.meta.env.VITE_API_TOKEN;
@@ -31,22 +31,23 @@ class KinopoiskApiClient {
     }
 
     return response.json();
-    }
+  }
 
     async getMovies(params: MovieSearchParams = {}): Promise<ApiResponse<Movie[]>> {
         return this.request('/v1.4/movie', params);
 
     }
 
-    /** 
+     
     async getMovieById(id: string): Promise<MovieDetails> {
         return this.request(`/v1.4/movie/${id}`);
     }
-    */
+    
 
     async searchMovies(query: string, params: MovieSearchParams = {}): Promise<ApiResponse<Movie[]>> {
         return this.request('/v1.4/movie/search', { ...params, query });
     }
+    
 }
 
 export const kinopoiskApi = new KinopoiskApiClient();

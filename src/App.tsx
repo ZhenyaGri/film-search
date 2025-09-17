@@ -10,7 +10,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MoviesPage />} />
-          <Route path="/movie/id" element={<MovieDetailPage />} />
+          <Route path="/movie/:id" element={<MovieDetailPage />} />
         </Routes>
       </BrowserRouter>
     </MantineProvider>

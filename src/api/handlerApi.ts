@@ -10,4 +10,8 @@ export const handlerApi = {
         return kinopoiskApi.searchMovies(query, params);
     },
 
+    getMoviesById: (id: string): Promise<Movie> => {
+        return kinopoiskApi.getMovieById(id);
+    },
+
 }

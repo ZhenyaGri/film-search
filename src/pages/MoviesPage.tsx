@@ -12,7 +12,9 @@ export default function MoviesPage() {
         <Button variant="filled" color="rgba(242, 12, 12, 1)" radius="md">{'Фильтры'}</Button>
         <Button variant="filled" color="rgba(242, 12, 12, 1)" radius="md">{'Поиск'}</Button>
       </Grid>
-      {MoviesGrid()}
+
+      <MoviesGrid num={10} />
+      
       <Grid justify="center" mb='xl'>
         <Pagination total={10}/>
       </Grid>

@@ -57,6 +57,7 @@ export interface MovieDetails extends Movie {
   persons: Array<{
     id: number;
     name: string;
+    enName: string;
     photo: string;
     profession: string;
   }>;

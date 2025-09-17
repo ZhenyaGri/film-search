@@ -1,25 +1,51 @@
 // pages/MovieDetailPage.tsx
 import { useParams } from 'react-router-dom';
-import { Container, Title, Text, Button, Image, Grid} from '@mantine/core';
-import posterImage from '../assets/img/film1.jpg';
+import { Container, Title, Text, Button, Image, Grid, LoadingOverlay} from '@mantine/core';
 import MoviesGrid from '../components/MoviesGrid';
+import { useEffect, useState } from 'react';
+import { kinopoiskApi } from '../api/kinopoiskApi';
+import { MovieDetails } from '../api/types';
 
 
 export default function MovieDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const movie = {title: 'Сибирский цирюльник',
-    year: '1998',
-    description: 'Годы правления Александра III. «Сибирский цирюльник» - паровая самоходная лесопилка, заказ на производство которой пытается получить в российских государственных органах американский авантюрист Маккрэкен. Для своей поддержки он вызывает в Москву Джейн, чья задача - обворожить генерала Радлова и уговорить его дать согласие на разработку машины. По пути Джейн знакомится с юнкером Андреем Толстым.',
-    image: posterImage,
-    rating: '8.1',
-    duration: '180 мин',
-    country: 'Россия, Франция, Италия',
-    director: 'Никита Михалков'}
+  const [movie, setMovie] = useState<MovieDetails | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  if (!movie) {
+  useEffect(() => {
+    if (id) {
+      fetchMovieDetails(id);
+    }
+  }, [id]);
+
+  const fetchMovieDetails = async (movieId: string) => {
+    try {
+      setLoading(true);
+      const movieData = await kinopoiskApi.getMovieById(movieId);
+      setMovie(movieData);
+    }
+    catch(err) {
+      setError('Ошибка при загрузке данных фильма');
+      console.error('Ошибка загрузки фильма:', err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (loading) {
+    return (
+      <Container>
+        <LoadingOverlay visible={loading} />
+      </Container>
+    );
+  }
+
+  if (error || !movie) {
     return (
       <Container>
         <Title>Фильм не найден</Title>
+        <Text color="red">{error}</Text>
       </Container>
     );
   }
@@ -30,8 +56,8 @@ export default function MovieDetailPage() {
        <Grid>
         <Grid.Col span={{ base: 12, md: 4 }}>
           <Image
-            src={movie.image}
-            alt={`Постер фильма "${movie.title}"`}
+            src={movie.poster.previewUrl || movie.poster.url}
+            alt={`Постер фильма "${movie.name}"`}
             mah={333}
             maw={222}
             radius="md"
@@ -40,22 +66,23 @@ export default function MovieDetailPage() {
             />
         </Grid.Col>
         <Grid.Col span={{ base: 12, md: 8 }}>
-          <Title order={1} mb="sm">{movie.title}</Title>
+          <Title order={1} mb="sm">{movie.name}</Title>
           <Text size="lg" color="dimmed" mb="md">{movie.year}</Text>
 
-          <Text fw={500} mb="xs">Рейтинг: {movie.rating}</Text>
-          <Text fw={500} mb="xs">Длительность: {movie.duration}</Text>
-          <Text fw={500} mb="xs">Страна: {movie.country}</Text>
-          <Text fw={500} mb="md">Режиссер: {movie.director}</Text>
+          <Text fw={500} mb="xs">Рейтинг: {movie.rating.kp}</Text>
+          <Text fw={500} mb="xs">Страна: {movie.countries.map((movie)=> movie.name).join(', ')}</Text>
+          <Text fw={500} mb="md">Актеры: {movie.persons.map((movie)=> movie.name || movie.enName).join(', ')}</Text>
         </Grid.Col>
        </Grid>
       <Container p={0}>
         <Title order={3} mb="sm">Описание</Title>
         <Text mb="xl">{movie.description}</Text>
       </Container>
-      <Container>
+      <Container p={0}>
         <Title order={3} mb="sm">Если вам понравился этот фильм</Title>
-        {MoviesGrid(5)}
+
+        <MoviesGrid num={5} />
+
         <Button variant="filled" color="rgba(242, 12, 12, 1)" radius="md">{'>'}</Button>
       </Container>
 
