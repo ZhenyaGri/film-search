@@ -1,4 +1,4 @@
-import { Movie } from "../api/types";
+import { Movie, Person } from "../api/types";
 
 export interface MovieCardProps {
   movie: Movie;
@@ -6,4 +6,8 @@ export interface MovieCardProps {
 
 export interface MoviesGridProps {
   num?: number;
+}
+
+export interface ActorCardProps {
+  person: Person;
 }

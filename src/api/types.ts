@@ -42,6 +42,7 @@ export interface Movie {
   poster: Poster;
   genres: Array<{ name: string }>;
   countries: Array<{ name: string }>;
+  persons?: Person[];
 }
 
 export interface MovieDetails extends Movie {
@@ -54,13 +55,15 @@ export interface MovieDetails extends Movie {
       site: string;
     }>;
   };
-  persons: Array<{
-    id: number;
-    name: string;
-    enName: string;
-    photo: string;
-    profession: string;
-  }>;
-  similarMovies: Movie[];
+  persons: Person[];
+  similarMovies?: Movie[];
   sequelsAndPrequels: Movie[];
+}
+
+export interface Person {
+  id: number;
+  photo: string;
+  name: string | null;
+  enName: string;
+  enProfession: string;
 }
